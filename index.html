@@ -2,9 +2,22 @@
 <html>
 <head>
 <title>Page Title</title>
+<style>
+li:hover { font-size : 300%;}
+</style>
+<script>var prenom = "Cé", nom = "Moah";</script>
 </head>
-<body>
-
+<body onload="init();">
+	<header>
+    		<h1>Corrigé du code du TP1  de conception d'interface Web</h1>
+            <label for="inPrenom">Firstname</label>
+            <input placeholder="taper ici votre prénom" oninput="prenom = this.value" id="inPrenom"/>&nbsp &nbsp <!-- codes caractère pour deux espaces -->
+            <label for="inNom">Name</label>
+            <input placeholder="taper ici votre nom" oninput="nom = this.value" id="inNom"/>
+    </header>
+    <main>
+		<article>
+        <p>6 niveaux de titres : 6 balises de h1 à h6 : laisser le curseur de souris sur chaque élément ...</p>
 <h1>Définitions</h1>
 <h2>Définitions</h2>
 <h3>Définitions</h3>
@@ -19,22 +32,84 @@
     <li>les <u><b><mark>balises</mark></b></u> dites <u><b><mark>orphelines</mark></b></u> qui n'encadrent aucun code et qui se ferment toutes seules. Exemple : <span title="break row">&lt;br/&gt;</span> ; <span title="horizontal row">&lt;hr/&gt;</span> <span title="image">&lt;img/&gt;</span> <span title="zone d'entrée">&lt;input/&gt;</span> etc ...;</li> 
 </ol>
 <hr title="horizontal row"/>
-    <br/><br/><br/>
-    <p>Tester : </p>
+    <br/><br/>
+    <h1>Tester : </h1>
     <ul>
-    <li title="italic" onclick="this.style.fontSize = '500%';" style="color:red;">i</li>
-    <li title="underline">u</li>
+    <li title="italic" onclick="this.style.fontSize = '500%';"
+    onmouseover="this.style.fontSize = '100%';" style="color:red;">i</li>
     <li title="emphasized : emphase = important">em</li>
+    <li title="underline">u</li>
+
     <li title="marked : surligné">mark</li>
     <li  title="deleted = supprimé = rayé">del</li>
+    <li  title="inserted = inséré = ajouté">ins</li>
     <li  title="bold = en gras">b</li>
+    <li  title="il ne faut pas utiliser des tags traduits !">gras</li>
+    <li  title="importance forte = en gras">strong</li>
+    <li  title="terme démodé = à solder !">s</li>
     
     </ul>
-    <br/><br/><br/><br/><br/><br/><br/>
-    <button onclick="alert('Bonjour');">cliquer ici</button>
+    <br/>
     
+    	</article>
+    	<aside>
+        	<nav>
+            	<h1>Sommaire :</h1>
+                <!-- à faire -->
+            </nav>
+        </aside>
+    </main>
+    <!-- pied de page -->
+    <footer>
+    	<button onclick="alert('Bonjour '+prenom+' '+nom);">cliquer ici</button>
+        <h1>Ressources complémentaires :</h1>
+        <ol>
+        	<li><a href="https://www.w3schools.com/tags/default.asp" title="" target="_blank">listes de toutes les balises</a></li>
+            <li><a href="https://www.w3schools.com/" title="" target="_blank">page d'accueil de w3schools</a></li>
+            <li><a href="" title="" target="_blank"></a></li>
+            <li><a href="https://www.w3schools.com/tags/default.asp" title="" target="_blank"></a></li>
+            <li><a href="" title="" target="_blank"></a></li>
+            <li><a href="" title="" target="_blank"></a></li>
+            <li><a href="" title="" target="_blank"></a></li>
+        </ol>
+    </footer>
     
+	<script> //partie en javascript
+function init() {	// déclenchée au chargement de body <=> onload="init()"
+    // ajout d'une infobulle = tooltips en anglais
+    // à tous les titres !
+
+    let titres = [], niv, i; // initialisations (let fait qu'elles restent locales)
+	for (niv = 1; niv <= 6; niv++) { // boucle sur les 6 niveaux de titre
+    	// la liste est remplies des listes de titres de chaque niveau
+    	titres.push( document.getElementsByTagName("H"+niv));
+        // debugage console Ctrl+Maj+j console.log("balise h"+niv + " : " + titres[niv-1][0].innerHTML);
+        // des info-bulles sont personnalisées en fonction des caractéristiques des balises 
+        for(i = 0; i <titres[niv-1].length;i++ ) {
+        titres[niv-1][i].title ="Ceci est le titre : '"+titres[niv-1][i].innerHTML+"' de niveau "+niv+" dont la balise est <h"+niv+"> de tagName : "+titres[niv-1][i].tagName;
+        }
+    }
     
+    // remplacer le 'nom de la balise' par <balise>'nom de la balise'</balise>
+    // liste des tags existants
+    let tags = ["i","em","u","mark","del","ins","b","strong","s"];
+    // HTML collection = liste des objet de type LI
+    let items = document.getElementsByTagName("li");
+    for (i = 0; i < items.length ; i++) {
+    	if (tags.includes(items[i].innerHTML)) {
+        	let balise = document.createElement(items[i].innerHTML);
+            // remplacement du contenu par un bloc <balise>contenu</balise>
+            balise.innerHTML = items[i].innerHTML;
+            items[i].innerHTML = "";
+            items[i].appendChild(balise);
+        }
+    }
+    // ajout d'info-bulles (tooltips) aux éléments du header (sauf h1)
+    let elementsDuHeader = document.getElementsByTagName("header")[0].childNodes;
+    for (elt of elementsDuHeader) elt.title = "La balise de cet élément est <"+elt.tagName+">";
+}  
+
+	</script>    
     
 </body>
 </html>
